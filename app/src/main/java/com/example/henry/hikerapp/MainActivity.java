@@ -12,11 +12,19 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     LocationManager locationManager;
     LocationListener locationListener;
+
+    TextView currentLat;
+    TextView currentLon;
+    TextView currentAcc;
+    TextView currentAlt;
+    TextView currentAdd;
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -36,13 +44,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        currentLat = findViewById(R.id.latitudeTextView);
+        currentLon = findViewById(R.id.longitudeTextView);
+        currentAcc = findViewById(R.id.accuracyTextView);
+        currentAlt = findViewById(R.id.altitudeTextView);
+        currentAdd = findViewById(R.id.addressTextView);
+
+
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        
+
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 Log.i("Location", location.toString());
+                currentLat.setText("Latitude: " + location.getLatitude());
+                currentLon.setText("Longitude: " + location.getLongitude());
+                currentAcc.setText("Accuracy: " + location.getAccuracy());
+                currentAlt.setText("Altitude: " + location.getAltitude());
             }
 
             @Override
