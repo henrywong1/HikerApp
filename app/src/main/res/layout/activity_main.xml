@@ -72,7 +72,7 @@
     <TextView
         android:id="@+id/addressTextView"
         android:layout_width="0dp"
-        android:layout_height="42dp"
+        android:layout_height="68dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="360dp"
         android:text="Address:"

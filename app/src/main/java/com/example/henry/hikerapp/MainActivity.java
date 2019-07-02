@@ -3,6 +3,8 @@ package com.example.henry.hikerapp;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,6 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,6 +67,40 @@ public class MainActivity extends AppCompatActivity {
                 currentLon.setText("Longitude: " + location.getLongitude());
                 currentAcc.setText("Accuracy: " + location.getAccuracy());
                 currentAlt.setText("Altitude: " + location.getAltitude());
+
+                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+
+                try {
+                    List<Address> listAddress = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+
+
+                    if (listAddress != null && listAddress.size() > 0) {
+                        String address = " ";
+
+                        if (listAddress.get(0).getThoroughfare() != null) {
+                            address += listAddress.get(0).getThoroughfare() + " ";
+                        }
+
+
+                        if (listAddress.get(0).getLocality() != null) {
+                            address += listAddress.get(0).getLocality() + " ";
+                        }
+
+                        if (listAddress.get(0).getPostalCode() != null) {
+                            address += listAddress.get(0).getPostalCode() + " ";
+                        }
+
+                        if (listAddress.get(0).getAdminArea() != null) {
+                            address += listAddress.get(0).getAdminArea();
+                        }
+                        currentAdd.setText("Address: " + address);
+
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
             }
 
             @Override
